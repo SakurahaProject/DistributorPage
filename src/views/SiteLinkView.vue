@@ -1,13 +1,14 @@
-<!-- Links.vue -->
 <template>
     <div class="links-page">
-        <h2 class="title">関連リンク🔗</h2>
-        <div v-if="loading" class="loading">読み込み中...</div>
-        <ul v-else class="links-list">
-            <li v-for="link in links" :key="link.url">
-                <a :href="link.url" target="_blank" rel="noopener noreferrer">{{ link.site }}</a>
-            </li>
-        </ul>
+        <dl v-if="!loading">
+            <div v-for="link in links" :key="link.url" class="link-item">
+                <dt>{{ link.site }}</dt>
+                <dd>
+                    <a :href="link.url" target="_blank" rel="noopener noreferrer">{{ link.url }}</a>
+                </dd>
+            </div>
+        </dl>
+        <p v-else class="loading">読み込み中...</p>
     </div>
 </template>
 
@@ -23,7 +24,7 @@ export default {
     },
     async mounted() {
         try {
-            const res = await axios.get('/api/v1/link');
+            const res = await axios.get('/link');
             this.links = res.data;
         } catch (e) {
             console.error('リンク取得エラー', e);
@@ -36,33 +37,43 @@ export default {
 
 <style scoped>
 .links-page {
-    max-width: 600px;
-    margin: auto;
+    text-align: left;
+    background: #fff;
+    border-radius: 25px;
     padding: 20px;
-    text-align: center;
+    width: 95%;
+    max-width: 400px;
+    box-shadow: 0 5px 20px rgba(255, 105, 180, 0.3);
 }
-.title {
-    color: #ff1493;
-    margin-bottom: 20px;
+dl {
+    margin: 0;
 }
-.links-list {
-    list-style: none;
-    padding: 0;
+dt {
+    font-weight: bold;
+    color: #fff;
+    background: #ff69b4;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 12px;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-.links-list li {
-    margin-bottom: 10px;
+dd {
+    margin: 6px 0 15px 0;
+    padding-left: 10px;
+    color: #333;
+    border-left: 3px solid #ffb6c1;
 }
-.links-list a {
+a {
     color: #ff69b4;
     text-decoration: none;
-    font-weight: bold;
     transition: 0.2s;
 }
-.links-list a:hover {
+a:hover {
     color: #ff1493;
 }
 .loading {
-    color: #ff1493;
     text-align: center;
+    color: #ff1493;
 }
 </style>
