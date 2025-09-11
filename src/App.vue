@@ -4,7 +4,6 @@
             <router-link to="/">トップページ</router-link>
             <router-link to="/profile">プロフィール</router-link>
             <router-link to="/schedule">スケジュール</router-link>
-            <router-link to="/blog">ブログ</router-link>
             <router-link to="/letter">おたより</router-link>
             <router-link to="/links">サイトリンク</router-link>
         </nav>
