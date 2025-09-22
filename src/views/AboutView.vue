@@ -18,11 +18,11 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from 'axios';
 
 export default {
-    data() {
+    data(): { profile: { column: string; content: string | string[] }[] } {
         return {
             profile: [],
         };
@@ -31,7 +31,13 @@ export default {
         async fetchProfile() {
             try {
                 const response = await axios.get('/api/v1/profile');
-                this.profile = response.data;
+                this.profile = response.data.map((item: { column: string; content: string }) => {
+                    const content = item.content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
+                    return {
+                        column: item.column,
+                        content: content.length > 1 ? content : item.content,
+                    };
+                });
             } catch (error) {
                 console.error('プロフィール取得エラー:', error);
                 this.profile = [];
