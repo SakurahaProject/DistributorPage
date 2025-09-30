@@ -14,8 +14,9 @@
 
 <script>
 import axios from 'axios';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     data() {
         return {
             links: [],
@@ -24,7 +25,7 @@ export default {
     },
     async mounted() {
         try {
-            const res = await axios.get('/link');
+            const res = await axios.get('https://api.sakurahaarisu.net/v1/link');
             this.links = res.data;
         } catch (e) {
             console.error('リンク取得エラー', e);
@@ -32,7 +33,7 @@ export default {
             this.loading = false;
         }
     },
-};
+});
 </script>
 
 <style scoped>

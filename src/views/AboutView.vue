@@ -20,8 +20,9 @@
 
 <script lang="ts">
 import axios from 'axios';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     data(): { profile: { column: string; content: string | string[] }[] } {
         return {
             profile: [],
@@ -30,7 +31,7 @@ export default {
     methods: {
         async fetchProfile() {
             try {
-                const response = await axios.get('/api/v1/profile');
+                const response = await axios.get('https://api.sakurahaarisu.net/v1/profile');
                 this.profile = response.data.map((item: { column: string; content: string }) => {
                     const content = item.content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
                     return {
@@ -47,7 +48,7 @@ export default {
     mounted() {
         this.fetchProfile();
     },
-};
+});
 </script>
 
 <style scoped>

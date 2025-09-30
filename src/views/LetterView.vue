@@ -21,8 +21,9 @@
 
 <script>
 import axios from 'axios';
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
     data() {
         return {
             form: {
@@ -38,7 +39,7 @@ export default {
             this.successMessage = '';
             this.errorMessage = '';
             try {
-                await axios.post('/api/v1/message', this.form);
+                await axios.post('https://api.sakurahaarisu.net/v1/message', this.form);
                 this.successMessage = 'おたよりを送信しました！ありがとうございます💕';
                 this.form.name = '';
                 this.form.message = '';
@@ -48,7 +49,7 @@ export default {
             }
         },
     },
-};
+});
 </script>
 
 <style scoped>

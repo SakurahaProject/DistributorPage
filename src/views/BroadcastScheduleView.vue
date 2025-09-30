@@ -20,7 +20,9 @@
 
 <script>
 import axios from 'axios';
-export default {
+import { defineComponent } from 'vue';
+
+export default defineComponent({
     data() {
         return {
             emojiMap: {
@@ -57,7 +59,7 @@ export default {
         },
         async fetchSchedules(date) {
             try {
-                const response = await axios.get('/api/v1/schedule', {
+                const response = await axios.get('https://api.sakurahaarisu.net/v1/schedule', {
                     params: { date: this.formatDate(date) },
                 });
                 return response.data[0]?.schedules || [];
@@ -94,7 +96,7 @@ export default {
     mounted() {
         this.renderWeek();
     },
-};
+});
 </script>
 
 <style scoped>
